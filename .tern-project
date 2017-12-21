@@ -1,0 +1,11 @@
+{
+  "plugins": {
+    "node": {},
+    "mocha": {}
+  },
+  "libs": [
+    "express"
+  ],
+  "ecmaVersion": 6
+}
+

@@ -1,0 +1,37 @@
+{
+  "name": "questionnaire-service",
+  "version": "1.0.0",
+  "description": "Questionnaire Service",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha",
+    "start": "nodemon"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/seanspradlin/questionnaire-service.git"
+  },
+  "author": "Sean Spradlin",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/seanspradlin/questionnaire-service/issues"
+  },
+  "homepage": "https://github.com/seanspradlin/questionnaire-service#readme",
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "eslint": "^4.13.1",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-react": "^7.5.1",
+    "mocha": "^4.0.1",
+    "ternjs": "^0.22.0"
+  },
+  "dependencies": {
+    "bluebird": "^3.5.1",
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2",
+    "nodemon": "^1.14.1",
+    "uuid": "^3.1.0"
+  }
+}

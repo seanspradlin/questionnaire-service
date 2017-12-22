@@ -8,11 +8,8 @@ const request = require('request-promise').defaults({
 });
 
 describe('/next', () => {
-  before((done) => {
-    server.listen(8080, () => {
-      done();
-    });
-  });
+  before(done => server.listen(8080, () => done()));
+  after(() => server.close());
 
   it('must return 400 if no GUID is provided', async (done) => {
     try {
@@ -80,9 +77,5 @@ describe('/next', () => {
     } catch (error) {
       done(error);
     }
-  });
-
-  after(() => {
-    server.close();
   });
 });

@@ -3,6 +3,9 @@
   "env": {
     "node": true,
     "mocha": true
+  },
+  "rules": {
+    "linebreak-style": "off"
   }
 }
 

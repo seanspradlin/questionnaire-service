@@ -7,7 +7,7 @@ const request = require('request-promise').defaults({
   simple: false,
 });
 
-describe('/session', () => {
+describe('/start', () => {
   before(done => server.listen(8080, () => done()));
   after(() => server.close());
 

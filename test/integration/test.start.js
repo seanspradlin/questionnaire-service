@@ -1,3 +1,5 @@
+process.env.NODE_ENV = 'test';
+
 const { assert } = require('chai');
 const server = require('../../lib/server');
 const request = require('request-promise').defaults({

@@ -5,7 +5,8 @@
     "mocha": true
   },
   "rules": {
-    "linebreak-style": "off"
+    "linebreak-style": "off",
+    "import/no-extraneous-dependencies": [2, { devDependencies: true }]
   }
 }
 

@@ -21,6 +21,7 @@ describe('/next', () => {
 
       // Then
       assert.equal(nextResponse.statusCode, 400);
+      done();
     } catch (error) {
       done(error);
     }
@@ -71,8 +72,8 @@ describe('/next', () => {
 
       // Then
       assert.equal(nextResponse.statusCode, 200);
-      assert.ok(nextResponse.body.question);
-      assert.ok(nextResponse.body.answers);
+      assert.isString(nextResponse.body.question);
+      assert.isArray(nextResponse.body.answers);
       done();
     } catch (error) {
       done(error);

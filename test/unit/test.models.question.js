@@ -144,10 +144,10 @@ describe('question', () => {
     };
 
     // When
-    const question = new Question(values);
+    const instantiate = () => new Question(values);
 
     // Then
-    assert.isString(question.question);
+    assert.throws(instantiate);
   });
 
   describe('getRedisKey', () => {

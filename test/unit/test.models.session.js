@@ -51,30 +51,27 @@ describe('session', () => {
     assert.throws(instantiate);
   });
 
-  it('should throw error if no id is provided', () => {
+  it('should generate an id if no id is provided', () => {
     // Given
     const values = {
       questionsAsked: [uuid(), uuid()],
     };
 
     // When
-    const instantiate = () => new Session(values);
+    const session = new Session(values);
 
     // Then
-    assert.throws(instantiate);
+    assert.isString(session.id);
+    assert.isOk(session.id);
   });
 
-  it('should throw an error if no questionsAsked provided', () => {
-    // Given
-    const values = {
-      id: uuid(),
-    };
-
+  it('should make empty array if no questionsAsked provided', () => {
     // When
-    const instantiate = () => new Session(values);
+    const session = new Session();
 
     // Then
-    assert.throws(instantiate);
+    assert.isArray(session.questionsAsked);
+    assert.equal(session.questionsAsked.length, 0);
   });
 
   it('should throw an error if questionsAsked is not an array', () => {
@@ -89,5 +86,19 @@ describe('session', () => {
 
     // Then
     assert.throws(instantiate);
+  });
+
+  describe('getRedisKey', () => {
+    it('should give a proper redis key', () => {
+      // Given
+      const id = uuid();
+      const session = new Session({ id });
+
+      // When
+      const redisKey = session.getRedisKey();
+
+      // Then
+      assert.equal(redisKey, `session:${id}`);
+    });
   });
 });

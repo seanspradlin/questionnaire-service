@@ -1,0 +1,66 @@
+[
+  {
+    "question": "Who was the best James Bond?",
+    "answers": [
+      "Sean Connery",
+      "David Niven",
+      "George Lazenby",
+      "Roger Moore",
+      "Timothy Dalton",
+      "Pierce Brosnan",
+      "Daniel Craig"
+    ]
+  },
+  {
+    "question": "What is the best song by Toto?",
+    "answers": ["Africa", "Hold the Line", "Rosanna", "Pamela"]
+  },
+  {
+    "question": "What is your favorite pizza topping?",
+    "answers": ["Pepperoni", "Canadian Bacon", "Pineapple", "BBQ Chicken"]
+  },
+  {
+    "question": "Who was the better captain?",
+    "answers": ["Picard", "Kirk"]
+  },
+  {
+    "question": "What is the best defense?",
+    "answers": ["A good offense", "A gooder defense"]
+  },
+  {
+    "question": "Which?",
+    "answers": ["Alabama", "Auburn"]
+  },
+  {
+    "question": "Which type of cheese is the moon made of?",
+    "answers": ["Swiss", "Cheddar", "Provolone"]
+  },
+  {
+    "question": "Who was the best President of the United States?",
+    "answers": [
+      "Abraham Lincoln",
+      "Theodore Roosevelt",
+      "Franklin Roosevelt",
+      "John F. Kennedy",
+      "George Washington",
+      "John Adams",
+      "Thomas Jefferson",
+      "Dwight D. Eisenhower",
+      "Andrew Jackson"
+    ]
+  },
+  {
+    "question": "Which is your preferred hardware store?",
+    "answers": ["Home Depot", "Lowes"]
+  },
+  {
+    "question": "How much water do you drink per day?",
+    "answers": [
+      "None",
+      "Less than a glass",
+      "Between one and three glasses",
+      "Between three and 7 glasses",
+      "Eight or more glasses"
+    ]
+  }
+]

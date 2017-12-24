@@ -109,7 +109,7 @@ describe('store', () => {
 
       // Then
       assert.isArray(keys);
-      assert.equal(keys.length, 1);
+      assert.include(keys, id);
       assert.isString(keys[0]);
     });
   });
@@ -117,17 +117,16 @@ describe('store', () => {
   describe('getQuestion', () => {
     it('should get a question', async () => {
       // Given
-      const question = new Question({
-        question: 'What is the best Toto song?',
-        answers: ['Africa', 'Hold the Line'],
-      });
-      await client.hmsetAsync(question.getRedisKey(), question);
+      const id = uuid();
+      const question = 'What is the best Toto song?';
+      const answers = JSON.stringify(['Africa', 'Hold the Line']);
+      await client.hmsetAsync(`question:${id}`, { id, question, answers });
 
       // When
-      const retrieved = await store.getQuestion(question.id);
+      const retrieved = await store.getQuestion(id);
 
       // Then
-      assert.equal(retrieved.id, question.id);
+      assert.equal(retrieved.id, id);
       assert.instanceOf(retrieved, Question);
     });
 
@@ -167,15 +166,14 @@ describe('store', () => {
       assert.equal(hash.id, question.id);
     });
 
-    it('should error if trying to save an invalid question', async () => {
+    it('should error if trying to save an invalid question', (done) => {
       // Given
       const question = { invalid: 'not a question' };
 
       // When
-      await store.saveQuestion(question);
-
-      // Then
-      assert.fail();
+      store.saveQuestion(question)
+        .then(() => done(new Error('must have thrown error')))
+        .catch(() => done());
     });
 
     it('should create an entry in the question keys list', async () => {
@@ -205,7 +203,6 @@ describe('store', () => {
 
       // Then
       assert.isArray(keys);
-      assert.equal(keys.length, 1);
       assert.isString(keys[0]);
     });
   });

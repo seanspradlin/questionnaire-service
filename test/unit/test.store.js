@@ -171,7 +171,8 @@ describe('store', () => {
       const question = { invalid: 'not a question' };
 
       // When
-      store.saveQuestion(question)
+      store
+        .saveQuestion(question)
         .then(() => done(new Error('must have thrown error')))
         .catch(() => done());
     });

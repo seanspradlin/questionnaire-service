@@ -1,13 +1,17 @@
 process.env.NODE_ENV = 'test';
 
 const { assert } = require('chai');
-const server = require('../../lib/server');
+const Server = require('../../lib/server');
+const redis = require('redis-mock');
 const request = require('request-promise').defaults({
   baseUrl: 'http://localhost:8080/api/',
   json: true,
   resolveWithFullResponse: true,
   simple: false,
 });
+
+const client = redis.createClient();
+const server = new Server(client);
 
 describe('/next', () => {
   before(done => server.listen(8080, () => done()));

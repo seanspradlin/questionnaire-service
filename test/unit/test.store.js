@@ -207,4 +207,21 @@ describe('store', () => {
       assert.isString(keys[0]);
     });
   });
+
+  describe('getRandomQuestion', () => {
+    it('should get a random question', async () => {
+      // Given
+      const question = new Question({
+        question: 'What is the best Toto song?',
+        answers: ['Africa', 'Hold the Line'],
+      });
+      await store.saveQuestion(question);
+
+      // When
+      const q = await store.getRandomQuestion();
+
+      // Then
+      assert.instanceOf(q, Question);
+    });
+  });
 });

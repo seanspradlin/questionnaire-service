@@ -1,0 +1,39 @@
+version: "3"
+services:
+  server:
+    build:
+      context: ./server
+    environment:
+      - NODE_ENV=production
+      - REDIS=//redis:6379
+      - PORT=8080
+    volumes:
+      - ./server:/usr/src/server
+      - /usr/src/server/node_modules
+    ports:
+      - 8080
+    networks:
+      - backend
+    links:
+      - redis:redis
+    depends_on:
+      - redis
+  redis:
+    image: redis:alpine
+    ports:
+      - 6379
+    networks:
+      - backend
+    volumes:
+      - ./data:/data
+  nginx:
+    build: ./nginx
+    ports:
+      - 80:80
+    networks:
+      - backend
+    links:
+      - server:server
+networks:
+  backend:
+

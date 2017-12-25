@@ -26,7 +26,7 @@ describe('/next', () => {
 
   it('must return 400 if no GUID is provided', async () => {
     // Given
-    const payload = {};
+    const payload = { body: {} };
 
     // When
     const nextResponse = await request.post('next', payload);
@@ -37,7 +37,7 @@ describe('/next', () => {
 
   it('must return 422 if a bad session is provided', async () => {
     // Given
-    const payload = { session: 'garbage-token' };
+    const payload = { body: { session: 'garbage-token' } };
 
     // When
     const nextResponse = await request.post('next', payload);
@@ -50,9 +50,10 @@ describe('/next', () => {
     // Given
     const sessionResponse = await request.post('session');
     const { session } = sessionResponse.body;
+    const payload = { body: { session } };
 
     // When
-    const nextResponse = await request.post('next', { session });
+    const nextResponse = await request.post('next', payload);
 
     // Then
     assert.equal(nextResponse.statusCode, 403);
@@ -62,10 +63,11 @@ describe('/next', () => {
     // Given
     const sessionResponse = await request.post('session');
     const { session } = sessionResponse.body;
+    const payload = { body: { session } };
 
     // When
-    await request.post('start', { session });
-    const nextResponse = await request.post('next', { session });
+    await request.post('start', payload);
+    const nextResponse = await request.post('next', payload);
 
     // Then
     assert.equal(nextResponse.statusCode, 200);

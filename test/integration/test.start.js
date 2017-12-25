@@ -26,7 +26,7 @@ describe('/start', () => {
 
   it('must return a 400 when no session is provided', async () => {
     // Given
-    const payload = {};
+    const payload = { body: {} };
 
     // When
     const response = await request.post('start', payload);
@@ -37,7 +37,7 @@ describe('/start', () => {
 
   it('must return a 422 when an invalid session is provided', async () => {
     // Given
-    const payload = { session: 'garbage-token' };
+    const payload = { body: { session: 'garbage-token' } };
 
     // When
     const response = await request.post('start', payload);
@@ -50,7 +50,7 @@ describe('/start', () => {
     // Given
     const sessionResponse = await request.post('session');
     const { session } = sessionResponse.body;
-    const payload = { session };
+    const payload = { body: { session } };
 
     // When
     await request.post('start', payload);
@@ -64,7 +64,7 @@ describe('/start', () => {
     // Given
     const sessionResponse = await request.post('session');
     const { session } = sessionResponse.body;
-    const payload = { session };
+    const payload = { body: { session } };
 
     // When
     const response = await request.post('start', payload);

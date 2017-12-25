@@ -56,7 +56,7 @@ describe('/summary', () => {
     // Given
     const sessionResponse = await request.post('session');
     const { session } = sessionResponse.body;
-    const payload = { session };
+    const payload = { body: { session } };
     await request.post('start', payload);
 
     // When

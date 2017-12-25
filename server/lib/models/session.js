@@ -1,6 +1,5 @@
 const uuid = require('uuid/v4');
-
-const uuidTest = /([a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}){1}/i;
+const utils = require('../utils');
 
 /**
  * Session
@@ -15,7 +14,7 @@ class Session {
   constructor(values) {
     if (!values || !values.id) {
       this.id = uuid();
-    } else if (typeof values.id !== 'string' || !uuidTest.test(values.id)) {
+    } else if (typeof values.id !== 'string' || !utils.UUID_TEST.test(values.id)) {
       throw new Error('must have a valid ID');
     } else {
       this.id = values.id;

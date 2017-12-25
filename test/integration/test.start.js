@@ -43,7 +43,7 @@ describe('/start', () => {
     const response = await request.post('start', payload);
 
     // Then
-    assert.equal(response.statusCode, 400);
+    assert.equal(response.statusCode, 422);
   });
 
   it('must return a 403 when called twice in a row', async () => {

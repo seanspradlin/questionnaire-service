@@ -25,7 +25,7 @@ describe('store', () => {
     it('should get a session', async () => {
       // Given
       const session = new Session();
-      await client.hmsetAsync(session.getRedisKey(), session);
+      await client.hmsetAsync(session.getRedisKey(), session.getRedisHash());
 
       // When
       const retrieved = await store.getSession(session.id);

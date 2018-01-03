@@ -80,7 +80,7 @@ describe('/next', () => {
 
   it('must return 422 if a bad session is provided', async () => {
     // Given
-    const payload = { body: { session: 'garbage-token' } };
+    const payload = { body: { session: 'garbage-token', answer: 0 } };
 
     // When
     const nextResponse = await request.post('next', payload);

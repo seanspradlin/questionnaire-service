@@ -64,7 +64,7 @@ describe('/summary', () => {
         answer: Math.floor(Math.random() * startResponse.body.answers.length),
       },
     };
-    const nextResponse = await request.post('next', payload2);
+    await request.post('next', payload2);
 
     // When
     const response = await request(`summary?session=${session}`);
@@ -72,7 +72,7 @@ describe('/summary', () => {
     // Then
     assert.equal(response.statusCode, 200);
     assert.equal(response.body[0].selected, payload2.body.answer);
-    assert.isUndefined(response.body[1].selected);
+    assert.isNull(response.body[1].selected);
     assert.isArray(response.body);
   });
 });

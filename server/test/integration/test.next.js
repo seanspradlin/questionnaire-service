@@ -26,13 +26,56 @@ describe('/next', () => {
 
   it('must return 400 if no GUID is provided', async () => {
     // Given
-    const payload = { body: {} };
+    const payload = { body: { answer: 0 } };
 
     // When
     const nextResponse = await request.post('next', payload);
 
     // Then
     assert.equal(nextResponse.statusCode, 400);
+  });
+
+  it('must return 400 if no answer is provided', async () => {
+    // Given
+    const sessionResponse = await request.post('session');
+    const { session } = sessionResponse.body;
+    const payload = { body: { session } };
+
+    // When
+    await request.post('start', payload);
+    const nextResponse = await request.post('next', payload);
+
+    // Then
+    assert.equal(nextResponse.statusCode, 400);
+  });
+
+  it('must return 422 if answer is not a number', async () => {
+    // Given
+    const sessionResponse = await request.post('session');
+    const { session } = sessionResponse.body;
+    const payload = { body: { session, answer: 'hello' } };
+
+    // When
+    await request.post('start', payload);
+    const nextResponse = await request.post('next', payload);
+
+    // Then
+    assert.equal(nextResponse.statusCode, 422);
+  });
+
+  it('must return 422 if answer is out of range of possible answers', async () => {
+    // Given
+    const sessionResponse = await request.post('session');
+    const { session } = sessionResponse.body;
+    const startPayload = { body: { session } };
+
+    // When
+    const startResponse = await request.post('start', startPayload);
+    const nextPayload = { body: { session, answer: startResponse.body.answers.length + 1 } };
+    const nextResponse = await request.post('next', nextPayload);
+
+    // Then
+    assert.equal(nextResponse.statusCode, 422);
   });
 
   it('must return 422 if a bad session is provided', async () => {
@@ -50,7 +93,7 @@ describe('/next', () => {
     // Given
     const sessionResponse = await request.post('session');
     const { session } = sessionResponse.body;
-    const payload = { body: { session } };
+    const payload = { body: { session, answer: 0 } };
 
     // When
     const nextResponse = await request.post('next', payload);
@@ -63,7 +106,7 @@ describe('/next', () => {
     // Given
     const sessionResponse = await request.post('session');
     const { session } = sessionResponse.body;
-    const payload = { body: { session } };
+    const payload = { body: { session, answer: 0 } };
 
     // When
     await request.post('start', payload);

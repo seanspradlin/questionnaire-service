@@ -56,14 +56,23 @@ describe('/summary', () => {
     // Given
     const sessionResponse = await request.post('session');
     const { session } = sessionResponse.body;
-    const payload = { body: { session } };
-    await request.post('start', payload);
+    const payload1 = { body: { session } };
+    const startResponse = await request.post('start', payload1);
+    const payload2 = {
+      body: {
+        session,
+        answer: Math.floor(Math.random() * startResponse.body.answers.length),
+      },
+    };
+    const nextResponse = await request.post('next', payload2);
 
     // When
     const response = await request(`summary?session=${session}`);
 
     // Then
     assert.equal(response.statusCode, 200);
+    assert.equal(response.body[0].selected, payload2.body.answer);
+    assert.isUndefined(response.body[1].selected);
     assert.isArray(response.body);
   });
 });

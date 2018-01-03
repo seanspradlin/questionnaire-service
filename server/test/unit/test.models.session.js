@@ -27,7 +27,7 @@ describe('session', () => {
     // Given
     const values = {
       id: uuid(),
-      questionsAsked: [uuid(), uuid()],
+      questionsAsked: [{ id: uuid(), answer: 0 }, { id: uuid(), answer: null }],
     };
 
     // When

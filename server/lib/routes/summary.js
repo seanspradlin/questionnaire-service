@@ -16,8 +16,9 @@ module.exports = (store) => {
    * @apiParam {UUID} session Session ID
    *
    * @apiSuccess {Object[]} questionnaire
-   * @apiSuccess {String}   questionnaire.question  Question to be asked
-   * @apiSuccess {String[]} questionnaire.answers   Collection of answers
+   * @apiSuccess {String}   questionnaire.question    Question to be asked
+   * @apiSuccess {String[]} questionnaire.answers     Collection of answers
+   * @apiSuccess {Number}   [questionnaire.selected]  Element of selected answer
    *
    * @apiSuccessExample
    * HTTP/1.1 200 OK
@@ -29,7 +30,8 @@ module.exports = (store) => {
    *       "Pizza",
    *       "Tacos",
    *       "Sushi"
-   *     ]
+   *     ],
+   *     "selected": 1
    *   },
    *   {
    *     "question": "How much do you exercise a week?",
@@ -39,7 +41,7 @@ module.exports = (store) => {
    *       "Between one and five hours",
    *       "Between five and ten hours",
    *       "More than ten hours"
-   *     ]
+   *     ],
    *   }
    * ]
    *

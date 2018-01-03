@@ -17,7 +17,8 @@ module.exports = (store) => {
    * @apiParam {UUID} session Session ID
    * @apiParamExample {json} Request Example
    * {
-   *   "session": "66c77d16-babb-49a6-8e89-f90cd4cef285"
+   *   "session": "66c77d16-babb-49a6-8e89-f90cd4cef285",
+   *   "answer": 0
    * }
    *
    * @apiSuccess {String}   question      Question to be asked

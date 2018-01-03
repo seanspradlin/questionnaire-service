@@ -53,7 +53,7 @@ module.exports = (store) => {
           }
           return store.getRandomQuestion().then((question) => {
             const s = session || new Session({ id: req.body.session });
-            s.questionsAsked.push(question.id);
+            s.questionsAsked.push({ id: question.id, answer: null });
             return store.saveSession(s).then(() => {
               res.message = {
                 status: 200,

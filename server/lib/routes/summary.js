@@ -42,6 +42,7 @@ module.exports = (store) => {
    *       "Between five and ten hours",
    *       "More than ten hours"
    *     ],
+   *     "selected": null
    *   }
    * ]
    *
@@ -61,7 +62,12 @@ module.exports = (store) => {
           if (!session || session.questionsAsked.length === 0) {
             return Promise.reject(new ForbiddenError());
           }
-          return Promise.all(session.questionsAsked.map(questionId => store.getQuestion(questionId)));
+          return Promise.all(session.questionsAsked.map(question =>
+            store.getQuestion(question.id).then(q => ({
+              question: q.question,
+              answers: q.answers,
+              selected: question.answer,
+            }))));
         })
         .then((questions) => {
           res.message = { status: 200, payload: questions };

@@ -14,7 +14,8 @@ module.exports = (store) => {
    * Get the next question in the series of questions. A series must be started by calling the start
    * endpoint first.
    *
-   * @apiParam {UUID} session Session ID
+   * @apiParam {UUID}   session   Session ID
+   * @apiParam {Number} answer  Answer to previous question
    * @apiParamExample {json} Request Example
    * {
    *   "session": "66c77d16-babb-49a6-8e89-f90cd4cef285",
@@ -42,9 +43,9 @@ module.exports = (store) => {
    * @apiUse UnprocessableEntityError
    */
   router.post('/', (req, res, next) => {
-    if (!req.body.session) {
+    if (!req.body.session || req.body.answer === undefined) {
       next(new BadRequestError());
-    } else if (!utils.UUID_TEST.test(req.body.session)) {
+    } else if (!utils.UUID_TEST.test(req.body.session) || Number.isNaN(req.body.answer)) {
       next(new UnprocessableEntityError());
     } else {
       store
@@ -54,17 +55,38 @@ module.exports = (store) => {
           if (!session || session.questionsAsked.length === 0) {
             return Promise.reject(new ForbiddenError());
           }
-          return store.getRandomQuestion().then((question) => {
-            session.questionsAsked.push(question.id);
-            return store.saveSession(session).then(() => {
-              res.message = {
-                status: 200,
-                payload: question,
-              };
-              next();
+
+          const lastQuestionId = session.questionsAsked[session.questionsAsked.length - 1].id;
+          const answer = Math.floor(req.body.answer);
+
+          // Answer is less than 0
+          if (answer < 0) {
+            return Promise.reject(new UnprocessableEntityError());
+          }
+
+          return store.getQuestion(lastQuestionId).then((lastQuestion) => {
+            const lastQuestionAsked = session.questionsAsked[session.questionsAsked.length - 1];
+
+            // Answer exceeds possible answers
+            if (answer >= lastQuestion.answers.length) {
+              return Promise.reject(new UnprocessableEntityError());
+            }
+
+            lastQuestionAsked.answer = answer;
+
+            return store.getRandomQuestion().then((question) => {
+              session.questionsAsked.push({ id: question.id, answer: null });
+              return store.saveSession(session).then(() => {
+                res.message = {
+                  status: 200,
+                  payload: question,
+                };
+                next();
+              });
             });
           });
         })
+
         .catch(next);
     }
   });
